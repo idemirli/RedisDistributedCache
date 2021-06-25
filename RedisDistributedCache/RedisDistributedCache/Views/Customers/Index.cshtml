@@ -1,0 +1,22 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    string takim = ViewBag.takim;
+    string renk = ViewBag.renk;
+    Customer customer = new Customer();
+    if (ViewBag.Customer is Customer)
+    {
+         customer = ViewBag.Customer as Customer;
+    }
+
+}
+
+<h1>Customers</h1>
+
+<h2>Takım :@takim</h2>
+<br />
+<h2>Renk : @renk</h2>
+
+<h2>Name : @customer.Name</h2>
+<h2>Age : @customer.Age</h2>
