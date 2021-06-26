@@ -11,14 +11,12 @@ using System.Threading.Tasks;
 
 namespace RedisDistributedCache.Controllers
 {
-    public class CustomersController : Controller
+    public class CustomersController : BaseController
     {
-        private IDistributedCache _distributedcache;
-        public CustomersController(IDistributedCache distributedCache)
+        public CustomersController(IDistributedCache distributedCache) : base(distributedCache)
         {
-            _distributedcache = distributedCache;
-
         }
+
         public IActionResult Index()
         {
             //SetKeyCache();
@@ -49,15 +47,15 @@ namespace RedisDistributedCache.Controllers
 
 
             //Binary
-            Byte[] byteCustomer = _distributedcache.Get("customer:1");
-            string jsonCustomer = Encoding.UTF8.GetString(byteCustomer);
-            Customer customer= jsonCustomer != null ? JsonConvert.DeserializeObject<Customer>(jsonCustomer) : new Customer();
+            //Byte[] byteCustomer = _distributedcache.Get("customer:1");
+            //string jsonCustomer = Encoding.UTF8.GetString(byteCustomer);
+            //Customer customer= jsonCustomer != null ? JsonConvert.DeserializeObject<Customer>(jsonCustomer) : new Customer();
 
             if (!string.IsNullOrEmpty(takim))
             {
                 ViewBag.takim = takim;
                 ViewBag.renk = renk;
-                ViewBag.Customer = customer;
+                //ViewBag.Customer = customer;
 
             }
             return View("Index");
@@ -105,7 +103,7 @@ namespace RedisDistributedCache.Controllers
         {
             DistributedCacheEntryOptions options = new DistributedCacheEntryOptions();
             options.AbsoluteExpiration = DateTime.Now.AddMinutes(1);
-            await _distributedcache.SetStringAsync("username", "ibrahim", options);
+            await _distributedcache.SetStringAsync("takim", "Galatasaray", options);
             await _distributedcache.SetStringAsync("renk", "kirmizi", options);
         }
 
@@ -115,7 +113,7 @@ namespace RedisDistributedCache.Controllers
 
             DistributedCacheEntryOptions options = new DistributedCacheEntryOptions();
             options.AbsoluteExpiration = DateTime.Now.AddMinutes(1);
-            Customer customer = new Customer { Id = 1, Name = "ibrahim", Age = 28, Surname = "Demirli" };
+            Customer customer = new Customer { Id = 1, Name = "Yavuz", Age = 28, Surname = "Türk" };
             string jsonCustomer = JsonConvert.SerializeObject(customer);
 
 
